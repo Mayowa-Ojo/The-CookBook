@@ -1,0 +1,39 @@
+.CookBook {
+    margin-top: 4em;
+}
+
+#root > div > div > h1 {
+    margin-bottom: 1.4em;
+    color: orange;
+}
+
+.CookBook-card {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.CookBook-content {
+    display: flex;
+    justify-content: center;
+}
+
+.CookBook-main {
+    width: 40%;
+}
+
+.CookBook-aside {
+    width: 25%;
+    border-right: 0.5px solid teal;
+    margin-right: 70px;
+}
+
+.CookBook-search {
+    margin-bottom: 3em;
+    width: 290px;
+}
+
+.CookBook-dropdown {
+    width: 290px;
+    margin-bottom: 3em;
+}
+
