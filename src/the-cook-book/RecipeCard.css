@@ -12,3 +12,7 @@ div.header {
     color: teal !important;
 }
 
+.RecipeCard-favorite-icon {
+        float: right;
+}
+

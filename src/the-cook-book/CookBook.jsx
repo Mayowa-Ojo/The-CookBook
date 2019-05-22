@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { Button, Card, Icon, Header, Image, Input, Dropdown } from 'semantic-ui-react';
+import { Button, Card, Icon, Header, Image, Input, Dropdown, Rating, Popup } from 'semantic-ui-react';
 import './CookBook.css';
 import RecipeCard from './RecipeCard';
 import RecipeMenu from './RecipeMenu';
-import { sample } from './helpers/sample-recipe';
+import { sample, extractProps } from './helpers/sample-recipe';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -19,9 +19,10 @@ class CookBook extends Component {
 			searchRecipe: "",
 			randomRecipe: [],
 			recipes: [],
-			favorites: [],
 			isError: false,
-			isRandom: false
+			isRandom: false,
+			rating: null,
+			maxRating: null
 		}
 	}
 
@@ -76,29 +77,55 @@ class CookBook extends Component {
 			isCardSmall: !st.isCardSmall
 		}))
 	}
+
+	handleRate = (e, {rating, maxRating}) => {
+		this.setState({
+			rating,
+			maxRating
+		})
+	}	
 	
+	// =================================================================================================
 
 	render() {
 		const {isCardSmall, searchRecipe, recipes, isError, isRandom, randomRecipe} = this.state;
-		console.log(randomRecipe[0])
-		const {meals} = this.props;
+		// console.log(randomRecipe[0])
+		const {meals, addFavorite} = this.props;
 		const meal = meals[0];
-		const extraContent = (
-							<Card.Content>
-								<Card.Header textAlign="center" color="steelblue">How?</Card.Header>
-								<Card.Description>{meal.strInstructions}</Card.Description>
-							</Card.Content>
-		)
 
 		const card = recipes.map((recipe) => {
 			if(Object.keys(recipe).length > 2) {
-				return <RecipeCard recipe={recipe} key={recipe.idMeal} />
+				return <RecipeCard recipe={recipe} key={recipe.idMeal} rating={this.handleRate} addFavorite={addFavorite} />
 			}
 		})
 
 		const randomCard = randomRecipe.map((recipe) => {
-			return <RecipeCard recipe={recipe} key={recipe.idMeal} />
+			return <RecipeCard recipe={recipe} key={recipe.idMeal} rating={this.handleRate} addFavorite={addFavorite} />
 		})
+
+		// =================================================================================================
+		const ingData = extractProps(meals)
+		// console.log(ingData);
+		const ingredients = ingData.ingredients[meal.idMeal].map((ing, idx) => <p>{ing}</p>)
+		const hyphen = ingData.ingredients[meal.idMeal].map((val, idx) => <p> - </p>)
+		const measures = ingData.measures[meal.idMeal].map((amt, idx) => <p>{amt}</p>)
+		
+		const extraContent = (
+			<Fragment>
+				<Card.Content>
+					<Card.Header textAlign="center" color="steelblue">How?</Card.Header>
+					<Card.Description>{meal.strInstructions}</Card.Description>
+					<Card.Header color="teal">Ingredients</Card.Header>
+				</Card.Content>
+				<Card.Content>
+					<div className="RecipeCard-ingredients">
+						<Card.Meta> {ingredients} </Card.Meta> 
+						<Card.Header> {hyphen} </Card.Header> 
+						<Card.Meta> {measures} </Card.Meta>
+					</div>                    
+				</Card.Content>
+			</Fragment>			
+		)
 
 		const dailyRecipe = (
 			<div className="CookBook-card">
@@ -107,12 +134,28 @@ class CookBook extends Component {
 					<Card.Content>
 						<Card.Header color="teal">{meal.strMeal}</Card.Header>
 						<Card.Meta>Category: {meal.strCategory}</Card.Meta>
+						<Card.Meta>
+							<Rating maxRating={5} onRate={this.handleRate} clearable />
+							<Popup 
+								content="Add this recipe to your favorites" 
+								trigger={<Icon 
+											className="CookBook-favorite-icon" 
+											name="heart" 
+											link 
+											onClick={() => addFavorite(meal.idMeal)} 
+											color="red"
+										/>}
+								position="left center"
+								inverted
+							/>
+						</Card.Meta>						
 					</Card.Content>						
 					{isCardSmall ? null : extraContent}
 					<Card.Content extra>
 						<div>
 							<Button 
 								compact 
+								size="mini"
 								color={isCardSmall ? "green" : "grey"}
 								floated="right" 
 								onClick={this.handleFullDispay}
@@ -123,8 +166,10 @@ class CookBook extends Component {
 					</Card.Content>
 				</Card>
 			</div>
-		)
+		)		
 
+		// =====================================================================================
+		
 		return (
 		  <div className="CookBook">
 			  <RecipeMenu />
@@ -158,7 +203,12 @@ class CookBook extends Component {
 								<Dropdown.Header icon='tags' content='Filter by category' />
 								<Dropdown.Item>Seafood</Dropdown.Item>
 								<Dropdown.Item>Desert</Dropdown.Item>
-								<Dropdown.Item>Discussion</Dropdown.Item>
+								<Dropdown.Item>Beef</Dropdown.Item>
+								<Dropdown.Item>Chicken</Dropdown.Item>
+								<Dropdown.Item>Lamb</Dropdown.Item>
+								<Dropdown.Item>Pasta</Dropdown.Item>
+								<Dropdown.Item>Pork</Dropdown.Item>
+								<Dropdown.Item>Side</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
 					</div>

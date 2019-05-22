@@ -5,7 +5,7 @@ import RecipeCard from './RecipeCard';
 
 const Favourites = (props) => {
     const favoriteCard = props.favoriteRecipe.map((recipe) => {
-        return <RecipeCard recipe={recipe} key={1} />
+        return <RecipeCard recipe={recipe} key={recipe.idMeal} />
     })
 
     return (
