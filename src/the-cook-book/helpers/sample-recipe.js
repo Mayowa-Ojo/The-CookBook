@@ -97,21 +97,17 @@ async function extractPropsNew(arr) {
 		let ingredients = []
 		let measures = []
 
-		const firstExtraction = async (obj) => {		
+		const firstExtraction = (obj) => {		
 			for(let prop in obj) {
 				if(prop.includes("strIngredient")) {
-					if(obj[prop] !== null && obj[prop].length > 0) {
-						delete obj[prop]					
-					} else delete obj[prop]
+					delete obj[prop]
 				} else if(prop.includes("strMeasure")) {
-					if(obj[prop] !== null && obj[prop].length > 0) {
-						delete obj[prop]					
-					} else delete obj[prop]
+					delete obj[prop]
 				}
 			}
 		}
 		
-		const secondExtraction = async (objCopy) => {		
+		const secondExtraction = (objCopy) => {		
 			for(let prop in objCopy) {
 				if(prop.includes("strIngredient")) {
 					if(objCopy[prop] !== null && objCopy[prop].length > 0) {
