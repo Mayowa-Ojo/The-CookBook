@@ -60,32 +60,83 @@ const sample = {
 };
 
 function extractProps(arr) {
-		let ingredients = {}
-		let measures = {}
-		let res = {
-				ingredients: ingredients,
-				measures: measures
-		}
-		arr.map(obj => {
-				ingredients[obj.idMeal] = []
-				measures[obj.idMeal] = []
-				for(let prop in obj) {
-						if(prop.includes("strIngredient")) {
-								if(obj[prop] !== null) {
-										if(obj[prop].length > 0) {
-												ingredients[obj.idMeal].push(obj[prop])
-										}
-								}
-						} else if(prop.includes("strMeasure")) {
-								if(obj[prop] !== null) {
-										if(obj[prop].length > 0) {
-												measures[obj.idMeal].push(obj[prop])
-										}
-								}
-						}
+	let ingredients = {}
+	let measures = {}
+	let res = {
+			ingredients: ingredients,
+			measures: measures
+	}
+	arr.map(obj => {
+		ingredients[obj.idMeal] = []
+		measures[obj.idMeal] = []
+		for(let prop in obj) {
+			if(prop.includes("strIngredient")) {
+				if(obj[prop] !== null) {
+					if(obj[prop].length > 0) {
+						ingredients[obj.idMeal].push(obj[prop])
+					}
 				}
-		})
-		return res;
+			} else if(prop.includes("strMeasure")) {
+				if(obj[prop] !== null) {
+					if(obj[prop].length > 0) {
+						measures[obj.idMeal].push(obj[prop])
+					}
+				}
+			}
+		}
+	})
+	return res;
+}
+
+async function extractPropsNew(arr) {
+	let arrCopy = arr.slice()
+	let extractedMeal = []
+	
+	arrCopy.map(async obj => {
+		let objCopy = {...obj}
+		let ingredients = []
+		let measures = []
+
+		const firstExtraction = async (obj) => {		
+			for(let prop in obj) {
+				if(prop.includes("strIngredient")) {
+					if(obj[prop] !== null && obj[prop].length > 0) {
+						delete obj[prop]					
+					} else delete obj[prop]
+				} else if(prop.includes("strMeasure")) {
+					if(obj[prop] !== null && obj[prop].length > 0) {
+						delete obj[prop]					
+					} else delete obj[prop]
+				}
+			}
+		}
+		
+		const secondExtraction = async (objCopy) => {		
+			for(let prop in objCopy) {
+				if(prop.includes("strIngredient")) {
+					if(objCopy[prop] !== null && objCopy[prop].length > 0) {
+						ingredients.push(objCopy[prop])
+					}
+				} else if(prop.includes("strMeasure")) {
+					if(objCopy[prop] !== null && objCopy[prop].length > 0) {
+						measures.push(objCopy[prop])
+					}
+				}
+			}
+		}
+		
+		const assign = () => {
+			obj.ingredients = ingredients;
+			obj.measures = measures;
+		}
+
+		await firstExtraction(obj);
+		await secondExtraction(objCopy);
+		await assign(obj);
+		
+		extractedMeal.push(obj);
+	})
+	return extractedMeal;
 }
 
 function useFavorite(recipe) {
