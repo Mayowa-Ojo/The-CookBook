@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import uuid from 'uuid/v4';
-import './App.css';
-import CookBook from './CookBook';
-import RecipeForm from './RecipeForm';
-import Favorites from './Favorites';
+import './styles/App.css';
+import CookBook from './components/CookBook';
+import RecipeForm from './components/RecipeForm';
+import Favorites from './components/Favorites';
 
 class App extends Component {
     state = {
         favoriteRecipes: [],
-        favorites: new Set
+        favorites: JSON.parse(window.localStorage.getItem("favorites") || "[]")
     }
 
     handleAddRecipe = (recipe) => {
@@ -21,10 +21,11 @@ class App extends Component {
     }
 
     handAddFavorite = (id) => {
+        const {favorites} = this.state;
         console.log(id)
         this.setState((st) => ({
-            favorites: st.favorites.add(id)
-        }))
+            favorites: [...st.favorites, id]
+        }), () => window.localStorage.setItem("favorites", JSON.stringify(favorites)))
     }
 
     render() {

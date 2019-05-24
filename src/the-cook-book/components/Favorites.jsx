@@ -1,5 +1,5 @@
 import React from 'react';
-import './Favorites.css';
+import '../styles/Favorites.css';
 import RecipeMenu from './RecipeMenu';
 import RecipeCard from './RecipeCard';
 

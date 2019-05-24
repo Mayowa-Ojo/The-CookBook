@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import { Button, Card, Icon, Header, Image, Input, Dropdown, Rating, Popup } from 'semantic-ui-react';
-import './CookBook.css';
+import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
 import RecipeMenu from './RecipeMenu';
-import { sample, extractProps } from './helpers/sample-recipe';
+import { sample, extractProps } from '../helpers/helpers';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 

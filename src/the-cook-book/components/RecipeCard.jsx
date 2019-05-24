@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Image, Rating, Icon, Popup } from 'semantic-ui-react';
-import './RecipeCard.css';
-import { extractProps, useFavorite } from './helpers/sample-recipe';
+import '../styles/RecipeCard.css';
+import { extractProps, useFavorite } from '../helpers/helpers';
 
 const RecipeCard = (props) => {
 	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb } = props.recipe;

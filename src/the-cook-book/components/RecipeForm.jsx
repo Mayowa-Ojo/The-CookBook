@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './RecipeForm.css';
+import '../styles/RecipeForm.css';
 import RecipeMenu from './RecipeMenu';
 import { Header, Form, Button } from 'semantic-ui-react';
 
