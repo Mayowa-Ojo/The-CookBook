@@ -142,9 +142,10 @@ function useFavorite(recipe) {
 }
 
 function toSet(arr) {
-    let set = new Set;
-    arr.map(val => set.add(val))
-	return set
+    let set = new Set();
+	arr.map(val => set.add(val))
+	let filteredArr = Array.from(set)
+	return filteredArr
 }
 
-export { sample, extractProps, useFavorite, toSet }
+export { sample, extractProps, extractPropsNew, useFavorite, toSet }

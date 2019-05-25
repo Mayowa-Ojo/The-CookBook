@@ -95,12 +95,24 @@ class CookBook extends Component {
 
 		const card = recipes.map((recipe) => {
 			if(Object.keys(recipe).length > 2) {
-				return <RecipeCard recipe={recipe} key={recipe.idMeal} rating={this.handleRate} addFavorite={addFavorite} />
+				return <RecipeCard 
+							recipe={recipe} 
+							key={recipe.idMeal} 
+							rating={this.handleRate} 
+							addFavorite={addFavorite} 
+							canDelete={false} 
+						/>
 			}
 		})
 
 		const randomCard = randomRecipe.map((recipe) => {
-			return <RecipeCard recipe={recipe} key={recipe.idMeal} rating={this.handleRate} addFavorite={addFavorite} />
+			return <RecipeCard 
+						recipe={recipe} 
+						key={recipe.idMeal} 
+						rating={this.handleRate} 
+						addFavorite={addFavorite} 
+						canDelete={false} 
+					/>
 		})
 
 		// =================================================================================================

@@ -6,7 +6,7 @@ import { extractProps, useFavorite } from '../helpers/helpers';
 const RecipeCard = (props) => {
 	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb } = props.recipe;
 	const { ingredients: favIngredients, measures: favMeasures } = props.recipe;
-	const { addFavorite } = props;
+	const { addFavorite, canDelete, removeFavorite } = props;
 	// ==================================================================================
 	const recipeArr = []
 	recipeArr.push(props.recipe)
@@ -27,6 +27,34 @@ const RecipeCard = (props) => {
 		? favMeasures.map(amount => <p>{amount}</p>)
 		: extractedData.measures[idMeal].map(amount => <p>{amount}</p>)
 	)
+
+	const popup = (
+		canDelete 
+		?	<Popup 
+				content="Remove this recipe from your favorites" 
+				trigger={<Icon 
+							className="RecipeCard-favorite-icon" 
+							name="heart" 
+							link 
+							onClick={() => removeFavorite(idMeal)} 
+							color="grey"
+						/>}
+				position="left center"
+				inverted
+			/>
+		:	<Popup 
+				content="Add this recipe to your favorites" 
+				trigger={<Icon 
+							className="RecipeCard-favorite-icon" 
+							name="heart" 
+							link 
+							onClick={() => addFavorite(idMeal)} 
+							color="red"
+						/>}
+				position="left center"
+				inverted
+			/>
+	) 
 	// ==================================================================================
 	return(
 		<div className="RecipeCard">
@@ -37,18 +65,7 @@ const RecipeCard = (props) => {
 					<Card.Meta>Category: {strCategory}</Card.Meta>
 					<Card.Meta>
 						<Rating maxRating={5} onRate={null} clearable />
-						<Popup 
-							content="Add this recipe to your favorites" 
-							trigger={<Icon 
-										className="RecipeCard-favorite-icon" 
-										name="heart" 
-										link 
-										onClick={() => addFavorite(idMeal)} 
-										color="red"
-									/>}
-							position="left center"
-							inverted
-						/>
+						{popup}
 					</Card.Meta>
 				</Card.Content>						
 				<Card.Content>

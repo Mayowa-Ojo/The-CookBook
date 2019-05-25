@@ -5,37 +5,56 @@ import './styles/App.css';
 import CookBook from './components/CookBook';
 import RecipeForm from './components/RecipeForm';
 import Favorites from './components/Favorites';
+import { toSet } from './helpers/helpers';
 
 class App extends Component {
     state = {
-        favoriteRecipes: [],
-        favorites: JSON.parse(window.localStorage.getItem("favorites") || "[]")
+        newRecipes: [],
+        favorites: []
+    }
+
+    componentDidMount() {
+        this.setState({
+            favorites: JSON.parse(localStorage.getItem("favorites")) || []
+        })
     }
 
     handleAddRecipe = (recipe) => {
-        const updatedRecipe = {...recipe, idMeal: uuid()}
+        const newRecipe = {...recipe, idMeal: uuid()}
         this.setState((st) => ({
-            favoriteRecipes: [...st.favoriteRecipes, updatedRecipe]
+            newRecipes: [...st.newRecipes, newRecipe]
         }))
 
     }
 
     handAddFavorite = (id) => {
         const {favorites} = this.state;
-        console.log(id)
+        const filterArr = [...favorites, id]        
+        const updatedState = toSet(filterArr)
+
         this.setState((st) => ({
-            favorites: [...st.favorites, id]
-        }), () => window.localStorage.setItem("favorites", JSON.stringify(favorites)))
+            favorites: [...updatedState]
+        }), () => localStorage.setItem("favorites", JSON.stringify(this.state.favorites)))               
+    }
+
+    handleRemoveFavorite = (id) => {
+        const {favorites} = this.state;
+        const updatedState = favorites.filter(fav => fav !== id);
+        
+        this.setState((st) => ({
+            favorites: [...updatedState]
+        }), () => localStorage.setItem("favorites", JSON.stringify(this.state.favorites)))
+        console.log(id);
     }
 
     render() {
-        const {favoriteRecipes} = this.state;
+        const {newRecipes, favorites} = this.state;
         return (       
             <div>
                 <Switch>
                     <Route exact path="/" render={() => <CookBook addFavorite={this.handAddFavorite} />} />
                     <Route exact path="/newrecipe" render={(routeProps) => <RecipeForm {...routeProps} addRecipe={this.handleAddRecipe} />} />
-                    <Route exact path="/favorites" render={() => <Favorites favoriteRecipe={favoriteRecipes} />} />
+                    <Route exact path="/favorites" render={() => <Favorites newRecipes={newRecipes} favorites={favorites} removeFavorite={this.handleRemoveFavorite}/>} />
                 </Switch> 
             </div>
         )
