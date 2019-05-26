@@ -1,32 +1,21 @@
-import React from 'react';
-import { Card, Image, Rating, Icon, Popup } from 'semantic-ui-react';
+import React, { Fragment } from 'react';
+import { Card, Image, Rating, Icon, Popup, Button } from 'semantic-ui-react';
 import '../styles/RecipeCard.css';
-import { extractProps, useFavorite } from '../helpers/helpers';
 
 const RecipeCard = (props) => {
-	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb } = props.recipe;
-	const { ingredients: favIngredients, measures: favMeasures } = props.recipe;
-	const { addFavorite, canDelete, removeFavorite } = props;
+	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb, ingredients: ingArr, measures: measureArr } = props.recipe;
+	// const { ingredients: favIngredients, measures: favMeasures } = props.recipe;
+	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall } = props;
 	// ==================================================================================
-	const recipeArr = []
-	recipeArr.push(props.recipe)
-	const extractedData = extractProps(recipeArr)
-	// console.log(useFavorite(props.recipe))
-	const ingredients = (
-		useFavorite(props.recipe) 
-		?  favIngredients.map(ing => <p>{ing}</p>)
-		: extractedData.ingredients[idMeal].map(ing => <p>{ing}</p>)
-	)
-	const hyphen = (
-		useFavorite(props.recipe)
-		? favIngredients.map(val => <p>-</p>)
-		: extractedData.ingredients[idMeal].map(val => <p>-</p>)
-	)
-	const measures = (
-		useFavorite(props.recipe)
-		? favMeasures.map(amount => <p>{amount}</p>)
-		: extractedData.measures[idMeal].map(amount => <p>{amount}</p>)
-	)
+	// const recipeArr = []
+	// recipeArr.push(props.recipe)
+	// const extractedData = extractProps(recipeArr)
+	// // console.log(useFavorite(props.recipe))
+	const ingredients = ingArr.map(ing => <p>{ing}</p>)
+
+	const hyphen = ingArr.map(val => <p>-</p>)
+
+	const measures = measureArr.map(amount => <p>{amount}</p>)
 
 	const popup = (
 		canDelete 
@@ -54,7 +43,24 @@ const RecipeCard = (props) => {
 				position="left center"
 				inverted
 			/>
-	) 
+	)
+
+	const extraContent = (
+		<Fragment>
+			<Card.Content>
+				<Card.Header textAlign="center" color="steelblue">How?</Card.Header>
+				<Card.Description>{strInstructions}</Card.Description>
+			</Card.Content>
+			<Card.Content>
+				<Card.Header color="teal">Ingredients</Card.Header>
+				<div className="RecipeCard-ingredients">
+					<Card.Meta> {ingredients} </Card.Meta> 
+					<Card.Header> {hyphen} </Card.Header> 
+					<Card.Meta> {measures} </Card.Meta>
+				</div>                    
+			</Card.Content>
+		</Fragment>
+)
 	// ==================================================================================
 	return(
 		<div className="RecipeCard">
@@ -68,17 +74,19 @@ const RecipeCard = (props) => {
 						{popup}
 					</Card.Meta>
 				</Card.Content>						
-				<Card.Content>
-					<Card.Header textAlign="center" color="steelblue">How?</Card.Header>
-					<Card.Description>{strInstructions}</Card.Description>
-				</Card.Content>
-				<Card.Content>
-					<Card.Header color="teal">Ingredients</Card.Header>
-					<div className="RecipeCard-ingredients">
-						<Card.Meta> {ingredients} </Card.Meta> 
-						<Card.Header> {hyphen} </Card.Header> 
-						<Card.Meta> {measures} </Card.Meta>
-					</div>                    
+				{isCardSmall ? null : extraContent}
+				<Card.Content extra>
+		 			<div>
+	 					<Button 
+							compact 
+							size="mini"
+							color={isCardSmall ? "green" : "grey"}
+							floated="right" 
+							onClick={fullDisplay}
+						>
+							{isCardSmall ? "More..." : "...Less"}
+						</Button>
+					</div>
 				</Card.Content>
 			</Card>
 		</div>

@@ -88,11 +88,11 @@ function extractProps(arr) {
 	return res;
 }
 
-async function extractPropsNew(arr) {
-	let arrCopy = arr.slice()
+function extractPropsNew(arr) {
+	let arrCopy = JSON.parse(JSON.stringify(arr))
 	let extractedMeal = []
 	
-	arrCopy.map(async obj => {
+	arrCopy.map(obj => {
 		let objCopy = {...obj}
 		let ingredients = []
 		let measures = []
@@ -126,9 +126,9 @@ async function extractPropsNew(arr) {
 			obj.measures = measures;
 		}
 
-		await firstExtraction(obj);
-		await secondExtraction(objCopy);
-		await assign(obj);
+		firstExtraction(obj);
+		secondExtraction(objCopy);
+		assign(obj);
 		
 		extractedMeal.push(obj);
 	})
