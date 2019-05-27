@@ -4,7 +4,7 @@ import { Button, Icon, Header, Input, Dropdown } from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
 import RecipeMenu from './RecipeMenu';
-import { sample, extractPropsNew } from '../helpers/helpers';
+import { sample, extractProps } from '../helpers/helpers';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -21,8 +21,6 @@ class CookBook extends Component {
 			recipes: [],
 			isError: false,
 			isRandom: false,
-			rating: null,
-			maxRating: null
 		}
 	}
 
@@ -40,11 +38,12 @@ class CookBook extends Component {
 	getRandomRecipe = async () => {
 		let url = `${baseURL}random.php`;
 		const data = await this.fetchMeal(url)
-		const parsedData = extractPropsNew(data)
+		const parsedData = extractProps(data)
 		this.setState({
 			randomRecipe: [...parsedData],
 			isRandom: true
 		})
+		// console.log(parsedData)
 	}
 
 	handleSearchChange = (e) => {
@@ -58,13 +57,14 @@ class CookBook extends Component {
 		let url = `${baseURL}search.php?s=${searchRecipe}`
 		const data = await this.fetchMeal(url);
 		if(data !== null) {
-			const parsedData = extractPropsNew(data)
+			const parsedData = extractProps(data)
 			this.setState((st) => ({
 				recipes: [...st.recipes, ...parsedData],
 				isRandom: false,
 				searchRecipe: "",
 				isError: false
 			}));
+			// console.log(parsedData)
 		} else {
 			this.setState({
 				isError: true,
@@ -104,6 +104,7 @@ class CookBook extends Component {
 							canDelete={false}
 							fullDisplay={this.handleFullDisplay}
 							isCardSmall={isCardSmall}
+							useClass={true}
 						/>
 			}
 		})
@@ -116,13 +117,14 @@ class CookBook extends Component {
 						addFavorite={addFavorite} 
 						canDelete={false}
 						fullDisplay={this.handleFullDisplay}
-						isCardSmall={isCardSmall} 
+						isCardSmall={isCardSmall}
+						useClass={true}
 					/>
 		})
 
 		// =====================================================================================
 		// WARNING: Breaking Changes
-		const parsedData = extractPropsNew(meals);
+		const parsedData = extractProps(meals);
 		// console.log(parsedData)
 		const dailyRecipe = parsedData.map((recipe) => {
 			return <RecipeCard 
@@ -133,6 +135,7 @@ class CookBook extends Component {
 						canDelete={false}
 						fullDisplay={this.handleFullDisplay}
 						isCardSmall={isCardSmall}
+						useClass={true}
 					/>
 		})
 		// =====================================================================================

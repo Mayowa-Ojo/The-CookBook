@@ -5,7 +5,7 @@ import '../styles/RecipeCard.css';
 const RecipeCard = (props) => {
 	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb, ingredients: ingArr, measures: measureArr } = props.recipe;
 	// const { ingredients: favIngredients, measures: favMeasures } = props.recipe;
-	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall } = props;
+	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall, useClass } = props;
 	// ==================================================================================
 	// const recipeArr = []
 	// recipeArr.push(props.recipe)
@@ -64,7 +64,7 @@ const RecipeCard = (props) => {
 	// ==================================================================================
 	return(
 		<div className="RecipeCard">
-			<Card color="orange" centered>
+			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered>
 				<Image src={strMealThumb} wrapped ui={false} />
 				<Card.Content>
 					<Card.Header color="teal">{strMeal}</Card.Header>
