@@ -1,11 +1,23 @@
 import React, { Fragment, useState } from 'react';
+import { Button, Icon, Header, Input, Dropdown } from 'semantic-ui-react';
+import '../styles/SideBar.css';
 
 const SideBar = (props) => {
-    const [searchQuery, setsearchQuery] = useState("");
+    const {isError, getRandomRecipe, search} = props;
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearchChange = (e, {name, value}) => {
+		setSearchQuery(value);
+	}
+	
+	const handleSearch = () => {
+		search(searchQuery)
+		setSearchQuery("")
+	}
 
     return(
         <Fragment>
-            <div className="CookBook-search">
+            <div className="SideBar-search">
 				<Header as='h3'>Search Popular Recipes: </Header>
 				<Input 
 					fluid
@@ -16,16 +28,16 @@ const SideBar = (props) => {
 							inverted 
 							circular 
 							link 
-							onClick={this.handleSearchResult}
+							onClick={handleSearch}
 						/>
 					} 
 					placeholder={isError ? "No recipe match, try again" : "Search"} 
-					name="searchRecipe" 
-					value={searchRecipe} 
-					onChange={this.handleSearchChange}					 
+					name="searchQuery" 
+					value={searchQuery} 
+					onChange={handleSearchChange}					 
 				/>
 			</div>
-			<div className="CookBook-dropdown">
+			<div className="SideBar-dropdown">
 				<Header>Filter by category: </Header>
 				<Dropdown text='Filter' icon='filter' floating labeled button fluid className='icon'>
 					<Dropdown.Menu>
@@ -43,7 +55,7 @@ const SideBar = (props) => {
 			</div>
 			<div>
 				<h3>Not sure what you're looking for?</h3>
-				<Button onClick={this.getRandomRecipe}>Surprise me!</Button>
+				<Button onClick={getRandomRecipe}>Surprise me!</Button>
 			</div>
         </Fragment>
     )
