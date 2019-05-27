@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Icon, Header, Input, Dropdown } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
 import RecipeMenu from './RecipeMenu';
-import { sample, extractPropsNew } from '../helpers/helpers';
+import { sample, extractProps } from '../helpers/helpers';
+import SideBar from './SideBar';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -16,13 +17,10 @@ class CookBook extends Component {
 		super(props)
 		this.state = {
 			isCardSmall: true,
-			searchRecipe: "",
 			randomRecipe: [],
 			recipes: [],
 			isError: false,
 			isRandom: false,
-			rating: null,
-			maxRating: null
 		}
 	}
 
@@ -40,38 +38,29 @@ class CookBook extends Component {
 	getRandomRecipe = async () => {
 		let url = `${baseURL}random.php`;
 		const data = await this.fetchMeal(url)
-		const parsedData = extractPropsNew(data)
+		const parsedData = extractProps(data)
 		this.setState({
 			randomRecipe: [...parsedData],
 			isRandom: true
 		})
-	}
+	}	
 
-	handleSearchChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value
-		})		
-	}
-
-	handleSearchResult = async () => {
-		const {searchRecipe} = this.state;
-		let url = `${baseURL}search.php?s=${searchRecipe}`
+	handleSearchResult = async (searchQuery) => {
+		// console.log(searchQuery)
+		let url = `${baseURL}search.php?s=${searchQuery}`
 		const data = await this.fetchMeal(url);
 		if(data !== null) {
-			const parsedData = extractPropsNew(data)
+			const parsedData = extractProps(data)
 			this.setState((st) => ({
 				recipes: [...st.recipes, ...parsedData],
 				isRandom: false,
-				searchRecipe: "",
 				isError: false
 			}));
 		} else {
 			this.setState({
 				isError: true,
-				searchRecipe: ""
 			})
 		}
-		// console.log(recipeData);
 	}
 
 	handleFullDisplay = () => {
@@ -79,19 +68,11 @@ class CookBook extends Component {
 			isCardSmall: !st.isCardSmall
 		}))
 	}
-
-	handleRate = (e, {rating, maxRating}) => {
-		this.setState({
-			rating,
-			maxRating
-		})
-	}	
 	
 	// =================================================================================================
 
 	render() {
-		const {isCardSmall, searchRecipe, recipes, isError, isRandom, randomRecipe} = this.state;
-		// console.log(randomRecipe[0])
+		const {isCardSmall, recipes, isError, isRandom, randomRecipe} = this.state;
 		const {meals, addFavorite} = this.props;
 
 		const card = recipes.map((recipe) => {
@@ -104,6 +85,7 @@ class CookBook extends Component {
 							canDelete={false}
 							fullDisplay={this.handleFullDisplay}
 							isCardSmall={isCardSmall}
+							useClass={true}
 						/>
 			}
 		})
@@ -116,14 +98,14 @@ class CookBook extends Component {
 						addFavorite={addFavorite} 
 						canDelete={false}
 						fullDisplay={this.handleFullDisplay}
-						isCardSmall={isCardSmall} 
+						isCardSmall={isCardSmall}
+						useClass={true}
 					/>
 		})
 
 		// =====================================================================================
 		// WARNING: Breaking Changes
-		const parsedData = extractPropsNew(meals);
-		// console.log(parsedData)
+		const parsedData = extractProps(meals);
 		const dailyRecipe = parsedData.map((recipe) => {
 			return <RecipeCard 
 						recipe={recipe} 
@@ -133,6 +115,7 @@ class CookBook extends Component {
 						canDelete={false}
 						fullDisplay={this.handleFullDisplay}
 						isCardSmall={isCardSmall}
+						useClass={true}
 					/>
 		})
 		// =====================================================================================
@@ -143,46 +126,7 @@ class CookBook extends Component {
 			  <Header as="h1" textAlign="center">The CookBook</Header>
 			  <div className="CookBook-content">
 				<section className="CookBook-aside">
-					<div className="CookBook-search">
-						<Header as='h3'>Search Popular Recipes: </Header>
-						<Input 
-							fluid
-							error = {isError}						
-							icon={
-								<Icon 
-									name='search' 
-									inverted 
-									circular 
-									link 
-									onClick={this.handleSearchResult}
-								/>
-							} 
-							placeholder={isError ? "No recipe match, try again" : "Search"} 
-							name="searchRecipe" 
-							value={searchRecipe} 
-							onChange={this.handleSearchChange}					 
-						/>
-					</div>
-					<div className="CookBook-dropdown">
-						<Header>Filter by category: </Header>
-						<Dropdown text='Filter' icon='filter' floating labeled button fluid className='icon'>
-							<Dropdown.Menu>
-								<Dropdown.Header icon='tags' content='Filter by category' />
-								<Dropdown.Item>Seafood</Dropdown.Item>
-								<Dropdown.Item>Desert</Dropdown.Item>
-								<Dropdown.Item>Beef</Dropdown.Item>
-								<Dropdown.Item>Chicken</Dropdown.Item>
-								<Dropdown.Item>Lamb</Dropdown.Item>
-								<Dropdown.Item>Pasta</Dropdown.Item>
-								<Dropdown.Item>Pork</Dropdown.Item>
-								<Dropdown.Item>Side</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</div>
-					<div>
-						<h3>Not sure what you're looking for?</h3>
-						<Button onClick={this.getRandomRecipe}>Surprise me!</Button>
-					</div>					
+					<SideBar isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />					
 				</section>
 
 				<section className="CookBook-main">

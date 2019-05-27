@@ -60,35 +60,6 @@ const sample = {
 };
 
 function extractProps(arr) {
-	let ingredients = {}
-	let measures = {}
-	let res = {
-			ingredients: ingredients,
-			measures: measures
-	}
-	arr.map(obj => {
-		ingredients[obj.idMeal] = []
-		measures[obj.idMeal] = []
-		for(let prop in obj) {
-			if(prop.includes("strIngredient")) {
-				if(obj[prop] !== null) {
-					if(obj[prop].length > 0) {
-						ingredients[obj.idMeal].push(obj[prop])
-					}
-				}
-			} else if(prop.includes("strMeasure")) {
-				if(obj[prop] !== null) {
-					if(obj[prop].length > 0) {
-						measures[obj.idMeal].push(obj[prop])
-					}
-				}
-			}
-		}
-	})
-	return res;
-}
-
-function extractPropsNew(arr) {
 	let arrCopy = JSON.parse(JSON.stringify(arr))
 	let extractedMeal = []
 	
@@ -135,12 +106,6 @@ function extractPropsNew(arr) {
 	return extractedMeal;
 }
 
-function useFavorite(recipe) {
-	if(Object.keys(recipe).length < 10) {
-		return true;
-	} else return false;
-}
-
 function toSet(arr) {
     let set = new Set();
 	arr.map(val => set.add(val))
@@ -148,4 +113,4 @@ function toSet(arr) {
 	return filteredArr
 }
 
-export { sample, extractProps, extractPropsNew, useFavorite, toSet }
+export { sample, extractProps, toSet }

@@ -1,4 +1,4 @@
-div.ui.orange.centered.card {
+#RecipeCard-card {
     width: 70%;
     margin-bottom: 2em;
 }
@@ -13,6 +13,6 @@ div.header {
 }
 
 .RecipeCard-favorite-icon {
-        float: right;
+    float: right;
 }
 
