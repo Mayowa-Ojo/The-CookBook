@@ -3,6 +3,11 @@
     margin-bottom: 2em;
 }
 
+.RecipeCard-box {
+    height: 450px;
+    margin-bottom: 3em !important;
+}
+
 .RecipeCard-ingredients {
     display: flex;
     justify-content: space-around;

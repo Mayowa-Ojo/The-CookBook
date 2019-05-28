@@ -64,7 +64,7 @@ const RecipeCard = (props) => {
 	// ==================================================================================
 	return(
 		<div className="RecipeCard">
-			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered>
+			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered className="RecipeCard-box">
 				<Image src={strMealThumb} wrapped ui={false} />
 				<Card.Content>
 					<Card.Header color="teal">{strMeal}</Card.Header>

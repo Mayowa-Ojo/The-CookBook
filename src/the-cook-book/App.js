@@ -32,7 +32,7 @@ class App extends Component {
 
     async getRecipe (state) {
         const  favIds = state !== undefined ? state : this.state.favIds;
-        console.log(`state at the beginning...${favIds}`)
+        // console.log(`state at the beginning...${favIds}`)
         let data;
         let promises = []
         for(let i = 0; i < favIds.length; i++){
