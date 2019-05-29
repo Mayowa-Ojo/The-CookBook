@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import App from './the-cook-book/App';
 import * as serviceWorker from './serviceWorker';
+import SideBar from './the-cook-book/SideBar';
 
 
 const el = document.getElementById('root');
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <SideBar />
     </BrowserRouter>, el
 );
 

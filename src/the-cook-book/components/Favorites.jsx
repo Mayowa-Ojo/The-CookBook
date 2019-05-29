@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Grid } from 'semantic-ui-react';
 import '../styles/Favorites.css';
-import RecipeMenu from './RecipeMenu';
 import RecipeCard from './RecipeCard';
 
 
@@ -38,7 +37,7 @@ const Favourites = (props) => {
 
     return (
         <div>
-            <RecipeMenu />
+            {/* <RecipeMenu /> */}
             <h1>Favorite Recipes</h1>
             <Fragment>
                 <Grid stackable columns={4} divided>

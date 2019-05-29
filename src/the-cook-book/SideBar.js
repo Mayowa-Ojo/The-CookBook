@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon, Responsive, Sidebar } from 'semantic-ui-react';
-import '../styles/RecipeMenu.css';
+import App from './components/App';
 
-
-const RecipeMenu = () => {
+const SideBar = () => {
     const [activeItem, setActiveItem] = useState("The CookBook");
     const [visible, setVisibility] = useState(false);
 
@@ -51,7 +50,9 @@ const RecipeMenu = () => {
                         />
                     </Menu.Menu>
                 </Menu>
+                <App />
             </Responsive>
+
             <Responsive {...Responsive.onlyMobile} >
                 <Sidebar.Pushable>
                     <Sidebar
@@ -84,6 +85,7 @@ const RecipeMenu = () => {
                                 <Icon name="sidebar" size="large" style={{color: "white"}} link onClick={handleVisibility} />
                             </Menu.Menu>
                         </Menu>
+                        <App />
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </Responsive>
@@ -92,4 +94,4 @@ const RecipeMenu = () => {
     
 }
 
-export default RecipeMenu;
+export default SideBar;

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header } from 'semantic-ui-react';
+import { Header, Responsive } from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
-import RecipeMenu from './RecipeMenu';
 import { sample, extractProps } from '../helpers/helpers';
-import SideBar from './SideBar';
+import Aside from './Aside';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -113,20 +112,21 @@ class CookBook extends Component {
 						rating={this.handleRate} 
 						addFavorite={addFavorite} 
 						canDelete={false}
+						label={true}
 						fullDisplay={this.handleFullDisplay}
 						isCardSmall={isCardSmall}
-						useClass={true}
+						useClass={true}						
 					/>
 		})
 		// =====================================================================================
 
 		return (
 		  <div className="CookBook">
-			  <RecipeMenu />
+			  {/* <RecipeMenu /> */}
 			  <Header as="h1" textAlign="center">The CookBook</Header>
 			  <div className="CookBook-content">
 				<section className="CookBook-aside">
-					<SideBar isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />					
+					<Aside isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />
 				</section>
 
 				<section className="CookBook-main">

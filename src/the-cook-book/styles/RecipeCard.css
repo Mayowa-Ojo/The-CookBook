@@ -4,7 +4,7 @@
 }
 
 .RecipeCard-box {
-    height: 450px;
+    min-height: 450px !important;
     margin-bottom: 3em !important;
 }
 
@@ -19,5 +19,11 @@ div.header {
 
 .RecipeCard-favorite-icon {
     float: right;
+}
+
+@media screen and (max-width: 700px) {
+    #RecipeCard-card {
+        width: 85%;
+    }
 }
 

@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import uuid from 'uuid/v4';
-import './styles/App.css';
-import CookBook from './components/CookBook';
-import RecipeForm from './components/RecipeForm';
-import Favorites from './components/Favorites';
-import { extractProps, toSet } from './helpers/helpers';
+import '../styles/App.css';
+import CookBook from './CookBook';
+import RecipeForm from './RecipeForm';
+import Favorites from './Favorites';
+import { extractProps, toSet } from '../helpers/helpers';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
