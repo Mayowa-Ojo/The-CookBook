@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import SideBar from './the-cook-book/SideBar';
+import Root from './the-cook-book/Root';
 
 
 const el = document.getElementById('root');
 
 ReactDOM.render(
     <BrowserRouter>
-        <SideBar />
+        <Root />
     </BrowserRouter>, el
 );
 

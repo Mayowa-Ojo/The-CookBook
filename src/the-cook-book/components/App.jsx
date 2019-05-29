@@ -94,9 +94,9 @@ class App extends Component {
                         exact 
                         path="/newrecipe" 
                         render={(routeProps) => <RecipeForm 
-                            {...routeProps} 
-                            addRecipe={this.handleAddRecipe} />} 
-                        />
+                                                    {...routeProps} 
+                                                    addRecipe={this.handleAddRecipe} />} 
+                                                />
                     <Route 
                         exact 
                         path="/favorites" 
