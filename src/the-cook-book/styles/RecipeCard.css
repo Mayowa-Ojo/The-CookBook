@@ -3,6 +3,11 @@
     margin-bottom: 2em;
 }
 
+.RecipeCard-box {
+    min-height: 450px !important;
+    margin-bottom: 3em !important;
+}
+
 .RecipeCard-ingredients {
     display: flex;
     justify-content: space-around;
@@ -14,5 +19,11 @@ div.header {
 
 .RecipeCard-favorite-icon {
     float: right;
+}
+
+@media screen and (max-width: 700px) {
+    #RecipeCard-card {
+        width: 85%;
+    }
 }
 

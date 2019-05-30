@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../styles/RecipeForm.css';
-import RecipeMenu from './RecipeMenu';
 import { Header, Form, Button } from 'semantic-ui-react';
 
 const options = [
@@ -103,7 +102,7 @@ class RecipeForm extends Component {
 
 		return (
 		  <div className="RecipeForm">
-			  <RecipeMenu />
+			  {/* <RecipeMenu /> */}
 			  <Header as="h1" textAlign="center">Add New Recipe</Header>
 			  <div className="RecipeForm-container">				
 				<Form onSubmit={this.handleSubmit}>

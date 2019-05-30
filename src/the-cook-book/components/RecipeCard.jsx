@@ -4,17 +4,10 @@ import '../styles/RecipeCard.css';
 
 const RecipeCard = (props) => {
 	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb, ingredients: ingArr, measures: measureArr } = props.recipe;
-	// const { ingredients: favIngredients, measures: favMeasures } = props.recipe;
-	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall, useClass } = props;
-	// ==================================================================================
-	// const recipeArr = []
-	// recipeArr.push(props.recipe)
-	// const extractedData = extractProps(recipeArr)
-	// // console.log(useFavorite(props.recipe))
+	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall, useClass, label } = props;
+	// ==================================================================================	
 	const ingredients = ingArr.map(ing => <p>{ing}</p>)
-
 	const hyphen = ingArr.map(val => <p>-</p>)
-
 	const measures = measureArr.map(amount => <p>{amount}</p>)
 
 	const popup = (
@@ -60,12 +53,12 @@ const RecipeCard = (props) => {
 				</div>                    
 			</Card.Content>
 		</Fragment>
-)
+	)
 	// ==================================================================================
 	return(
 		<div className="RecipeCard">
-			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered>
-				<Image src={strMealThumb} wrapped ui={false} />
+			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered className="RecipeCard-box">
+				<Image src={strMealThumb} wrapped ui={false} label={label && { color: 'yellow', corner: 'right', icon: 'lightbulb' }}/>
 				<Card.Content>
 					<Card.Header color="teal">{strMeal}</Card.Header>
 					<Card.Meta>Category: {strCategory}</Card.Meta>
@@ -82,7 +75,7 @@ const RecipeCard = (props) => {
 							size="mini"
 							color={isCardSmall ? "green" : "grey"}
 							floated="right" 
-							onClick={fullDisplay}
+							onClick={() => fullDisplay(idMeal)}
 						>
 							{isCardSmall ? "More..." : "...Less"}
 						</Button>

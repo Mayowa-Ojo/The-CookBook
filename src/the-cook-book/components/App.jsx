@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import uuid from 'uuid/v4';
-import './styles/App.css';
-import CookBook from './components/CookBook';
-import RecipeForm from './components/RecipeForm';
-import Favorites from './components/Favorites';
-import { extractProps, toSet } from './helpers/helpers';
+import '../styles/App.css';
+import CookBook from './CookBook';
+import RecipeForm from './RecipeForm';
+import Favorites from './Favorites';
+import { extractProps, toSet } from '../helpers/helpers';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -15,7 +15,8 @@ class App extends Component {
         newRecipes: [],
         favIds: [],
         favoritesData: [],
-        isCardSmall: true
+        isCardSmall: true,
+        recipeId: ""
     }
 
     fetchMeal = async (url) => {
@@ -32,7 +33,7 @@ class App extends Component {
 
     async getRecipe (state) {
         const  favIds = state !== undefined ? state : this.state.favIds;
-        console.log(`state at the beginning...${favIds}`)
+        // console.log(`state at the beginning...${favIds}`)
         let data;
         let promises = []
         for(let i = 0; i < favIds.length; i++){
@@ -78,14 +79,15 @@ class App extends Component {
         // console.log("updated!");
     }
 
-    handleFullDisplay = () => {
+    handleFullDisplay = (id) => {
 		this.setState((st) => ({
-			isCardSmall: !st.isCardSmall
-		}))
+            isCardSmall: !st.isCardSmall,
+            recipeId: id
+        }))
     }
     
     render() {
-        const { newRecipes, favoritesData, isCardSmall } = this.state;
+        const { newRecipes, favoritesData, isCardSmall, recipeId } = this.state;
         return (
             <div>
                 <Switch>
@@ -94,9 +96,9 @@ class App extends Component {
                         exact 
                         path="/newrecipe" 
                         render={(routeProps) => <RecipeForm 
-                            {...routeProps} 
-                            addRecipe={this.handleAddRecipe} />} 
-                        />
+                                                    {...routeProps} 
+                                                    addRecipe={this.handleAddRecipe} />} 
+                                                />
                     <Route 
                         exact 
                         path="/favorites" 
@@ -106,6 +108,7 @@ class App extends Component {
                             removeFavorite={this.handleRemoveFavorite}
                             fullDisplay={this.handleFullDisplay}
                             isCardSmall={isCardSmall}
+                            recipeId={recipeId}
                         />} 
                     />
                 </Switch> 

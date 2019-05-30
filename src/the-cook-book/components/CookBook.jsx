@@ -3,9 +3,8 @@ import axios from 'axios';
 import { Header } from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
-import RecipeMenu from './RecipeMenu';
 import { sample, extractProps } from '../helpers/helpers';
-import SideBar from './SideBar';
+import Aside from './Aside';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
@@ -17,6 +16,7 @@ class CookBook extends Component {
 		super(props)
 		this.state = {
 			isCardSmall: true,
+			recipeId: "",
 			randomRecipe: [],
 			recipes: [],
 			isError: false,
@@ -63,16 +63,17 @@ class CookBook extends Component {
 		}
 	}
 
-	handleFullDisplay = () => {
+	handleFullDisplay = (id) => {
 		this.setState((st) => ({
-			isCardSmall: !st.isCardSmall
+			isCardSmall: !st.isCardSmall,
+			recipeId: id
 		}))
 	}
 	
 	// =================================================================================================
 
 	render() {
-		const {isCardSmall, recipes, isError, isRandom, randomRecipe} = this.state;
+		const {isCardSmall, recipes, isError, isRandom, randomRecipe, recipeId} = this.state;
 		const {meals, addFavorite} = this.props;
 
 		const card = recipes.map((recipe) => {
@@ -84,7 +85,7 @@ class CookBook extends Component {
 							addFavorite={addFavorite} 
 							canDelete={false}
 							fullDisplay={this.handleFullDisplay}
-							isCardSmall={isCardSmall}
+							isCardSmall={recipe.idMeal === recipeId ? isCardSmall : true}
 							useClass={true}
 						/>
 			}
@@ -113,6 +114,7 @@ class CookBook extends Component {
 						rating={this.handleRate} 
 						addFavorite={addFavorite} 
 						canDelete={false}
+						label={true}
 						fullDisplay={this.handleFullDisplay}
 						isCardSmall={isCardSmall}
 						useClass={true}
@@ -122,11 +124,11 @@ class CookBook extends Component {
 
 		return (
 		  <div className="CookBook">
-			  <RecipeMenu />
+			  {/* <RecipeMenu /> */}
 			  <Header as="h1" textAlign="center">The CookBook</Header>
 			  <div className="CookBook-content">
 				<section className="CookBook-aside">
-					<SideBar isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />					
+					<Aside isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />
 				</section>
 
 				<section className="CookBook-main">

@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { Button, Icon, Header, Input, Dropdown } from 'semantic-ui-react';
-import '../styles/SideBar.css';
+import '../styles/Aside.css';
 
-const SideBar = (props) => {
+const Aside = (props) => {
     const {isError, getRandomRecipe, search} = props;
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -55,10 +55,10 @@ const SideBar = (props) => {
 			</div>
 			<div>
 				<h3>Not sure what you're looking for?</h3>
-				<Button onClick={getRandomRecipe}>Surprise me!</Button>
+				<Button id="SideBar-btn" color="pink" onClick={getRandomRecipe}>Surprise me!</Button>
 			</div>
         </Fragment>
     )
 }
 
-export default SideBar;
+export default Aside;
