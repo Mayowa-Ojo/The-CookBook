@@ -15,7 +15,8 @@ class App extends Component {
         newRecipes: [],
         favIds: [],
         favoritesData: [],
-        isCardSmall: true
+        isCardSmall: true,
+        recipeId: ""
     }
 
     fetchMeal = async (url) => {
@@ -78,14 +79,15 @@ class App extends Component {
         // console.log("updated!");
     }
 
-    handleFullDisplay = () => {
+    handleFullDisplay = (id) => {
 		this.setState((st) => ({
-			isCardSmall: !st.isCardSmall
-		}))
+            isCardSmall: !st.isCardSmall,
+            recipeId: id
+        }))
     }
     
     render() {
-        const { newRecipes, favoritesData, isCardSmall } = this.state;
+        const { newRecipes, favoritesData, isCardSmall, recipeId } = this.state;
         return (
             <div>
                 <Switch>
@@ -106,6 +108,7 @@ class App extends Component {
                             removeFavorite={this.handleRemoveFavorite}
                             fullDisplay={this.handleFullDisplay}
                             isCardSmall={isCardSmall}
+                            recipeId={recipeId}
                         />} 
                     />
                 </Switch> 

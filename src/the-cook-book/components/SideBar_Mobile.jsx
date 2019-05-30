@@ -50,7 +50,7 @@ const SideBarMobile = () => {
                 />
             </Sidebar>
             <Sidebar.Pusher style={{minHeight: "100vh"}}>
-                <Menu inverted>
+                <Menu inverted fixed="top">
                     <Menu.Item>
                         <Icon name="food" color="orange" />
                     </Menu.Item>

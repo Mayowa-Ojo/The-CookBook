@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Button, Icon, Header, Input, Dropdown } from 'semantic-ui-react';
-import '../styles/SideBar.css';
+import '../styles/Aside.css';
 
 const Aside = (props) => {
     const {isError, getRandomRecipe, search} = props;

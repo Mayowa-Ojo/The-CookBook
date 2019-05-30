@@ -5,7 +5,7 @@ import RecipeCard from './RecipeCard';
 
 
 const Favourites = (props) => {
-    const {removeFavorite, newRecipes, favorites, isCardSmall, fullDisplay} = props    
+    const {removeFavorite, newRecipes, favorites, isCardSmall, fullDisplay, recipeId} = props    
           
     const newRecipeCard = newRecipes.map((recipe) => {
         return <RecipeCard 
@@ -27,7 +27,7 @@ const Favourites = (props) => {
                     key={recipe.idMeal} 
                     canDelete={true} 
                     removeFavorite={removeFavorite}
-                    isCardSmall={isCardSmall}
+                    isCardSmall={recipe.idMeal === recipeId ? isCardSmall : true}
                     fullDisplay={fullDisplay}
                     useClass={false}
                 />
