@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/RecipeForm.css';
-import { Header, Form, Button } from 'semantic-ui-react';
+import { Header, Form, Button, Responsive } from 'semantic-ui-react';
 
 const options = [
 	{text: "Desert", value: "desert"},
@@ -106,16 +106,34 @@ class RecipeForm extends Component {
 			  <Header as="h1" textAlign="center">Add New Recipe</Header>
 			  <div className="RecipeForm-container">				
 				<Form onSubmit={this.handleSubmit}>
-					<Form.Group>
-						<Form.Input label="Meal" name="strMeal" value={strMeal} placeholder="meal title" width={10} onChange={this.handleChange} />
-						<Form.Select fluid label='Category' name="strCategory" options={options} placeholder='Category' width={6} onChange={this.handleChange}/>														
-					</Form.Group>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>					
+						<Form.Group>
+							<Form.Input label="Meal" name="strMeal" value={strMeal} placeholder="meal title" width={10} onChange={this.handleChange} />
+							<Form.Select fluid label='Category' name="strCategory" options={options} placeholder='Category' width={6} onChange={this.handleChange}/>														
+						</Form.Group>
+					</Responsive>
 
-					<Form.Group widths={1}>
-						<div className="RecipeForm-input">{ingInputs}</div>
-						<div className="RecipeForm-input">{measureInputs}</div>							
-					</Form.Group>
+					<Responsive {...Responsive.onlyMobile}>
+						<Form.Group>
+							<Form.Input label="Meal" name="strMeal" value={strMeal} placeholder="meal title" width={10} size="mini" onChange={this.handleChange} />
+							<Form.Select fluid label='Category' name="strCategory" options={options} placeholder='Category' width={4} size="mini" onChange={this.handleChange}/>														
+						</Form.Group>
+					</Responsive>
 					
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						<Form.Group widths={1}>
+							<div className="RecipeForm-input">{ingInputs}</div>
+							<div className="RecipeForm-input">{measureInputs}</div>							
+						</Form.Group>
+					</Responsive>
+
+					<Responsive {...Responsive.onlyMobile}>
+						<Form.Group widths={2}>
+							<div className="RecipeForm-input">{ingInputs}</div>
+							<div className="RecipeForm-input">{measureInputs}</div>							
+						</Form.Group>
+					</Responsive>
+
 					<Button 
 						size="mini"
 						circular
@@ -126,7 +144,14 @@ class RecipeForm extends Component {
 
 					<Form.TextArea rows={6} label="Instructions" name="strInstructions" value={strInstructions} placeholder="add instructions" onChange={this.handleChange} />
 					<Form.Input label="Image" name="strMealThumb" value={strMealThumb} placeholder="image url" width={10} onChange={this.handleChange} />
-					<Form.Button color="teal">Add</Form.Button>
+					
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						<Form.Button color="teal">Add</Form.Button>
+					</Responsive>
+					
+					<Responsive {...Responsive.onlyMobile}>
+						<Form.Button size="mini" color="teal">Add</Form.Button>
+					</Responsive>					
 				</Form>
 			  </div>
 			  

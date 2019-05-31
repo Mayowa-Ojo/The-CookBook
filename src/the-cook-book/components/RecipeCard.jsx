@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Card, Image, Rating, Icon, Popup, Button } from 'semantic-ui-react';
+import { Card, Image, Rating, Icon, Popup, Button, Modal } from 'semantic-ui-react';
 import '../styles/RecipeCard.css';
 
 const RecipeCard = (props) => {
@@ -56,33 +56,38 @@ const RecipeCard = (props) => {
 	)
 	// ==================================================================================
 	return(
-		<div className="RecipeCard">
-			<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered className="RecipeCard-box">
-				<Image src={strMealThumb} wrapped ui={false} label={label && { color: 'yellow', corner: 'right', icon: 'lightbulb' }}/>
-				<Card.Content>
-					<Card.Header color="teal">{strMeal}</Card.Header>
-					<Card.Meta>Category: {strCategory}</Card.Meta>
-					<Card.Meta>
-						<Rating maxRating={5} onRate={null} clearable />
-						{popup}
-					</Card.Meta>
-				</Card.Content>						
-				{isCardSmall ? null : extraContent}
-				<Card.Content extra>
-		 			<div>
-	 					<Button 
-							compact 
-							size="mini"
-							color={isCardSmall ? "green" : "grey"}
-							floated="right" 
-							onClick={() => fullDisplay(idMeal)}
-						>
-							{isCardSmall ? "More..." : "...Less"}
-						</Button>
-					</div>
-				</Card.Content>
-			</Card>
-		</div>
+		<Fragment>
+			<div className="RecipeCard">
+				<Card id={useClass ? "RecipeCard-card" : ""} color="orange" centered className="RecipeCard-box">
+					<Image src={strMealThumb} wrapped ui={false} label={label && { color: 'yellow', corner: 'right', icon: 'lightbulb' }}/>
+					<Card.Content>
+						<Card.Header color="teal">{strMeal}</Card.Header>
+						<Card.Meta>Category: {strCategory}</Card.Meta>
+						<Card.Meta>
+							<Rating maxRating={5} onRate={null} clearable />
+							{popup}
+						</Card.Meta>
+					</Card.Content>						
+					{isCardSmall ? null : extraContent}
+					<Card.Content extra>
+						<div>
+							<Button 
+								compact 
+								size="mini"
+								color={isCardSmall ? "green" : "grey"}
+								floated="right" 
+								onClick={() => fullDisplay(idMeal)}
+							>
+								{isCardSmall ? "More..." : "...Less"}
+							</Button>
+						</div>
+					</Card.Content>
+				</Card>
+			</div>
+			<Modal trigger={<Button>Modal</Button>}>
+				
+			</Modal>
+		</Fragment>
 	)
 }
 

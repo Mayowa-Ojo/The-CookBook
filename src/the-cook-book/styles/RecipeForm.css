@@ -15,12 +15,26 @@
     margin-right: 3em;
 }
 
-/* #root > div > div > div.RecipeForm-container > form > div:nth-child(2) > div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
+.RecipeForm div {
+    margin-bottom: 0.5em;
 }
 
-#root > div > div > div.RecipeForm-container > form > div:nth-child(2) > div:nth-child(1) {
-    display: flex;
-    flex-direction: column;
-} */
+@media screen and (max-width: 700px) {
+    .RecipeForm-container {
+        width: 87%;
+    }
+
+    .RecipeForm-input {
+        margin-right: 1.5em;
+        margin-left: 0.5em;
+        width: 40%;
+    }
+
+    .RecipeForm label {
+        font-size: 0.9em !important;
+    }
+
+    /* .RecipeForm button {
+        height: 30px;
+    } */
+}

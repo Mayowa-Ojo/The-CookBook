@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header } from 'semantic-ui-react';
+import { Header} from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
 import { sample, extractProps } from '../helpers/helpers';
@@ -125,7 +125,7 @@ class CookBook extends Component {
 		return (
 		  <div className="CookBook">
 			  {/* <RecipeMenu /> */}
-			  <Header as="h1" textAlign="center">The CookBook</Header>
+			  <Header as="h1" color="orange" textAlign="center">The CookBook</Header>
 			  <div className="CookBook-content">
 				<section className="CookBook-aside">
 					<Aside isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />
@@ -138,7 +138,7 @@ class CookBook extends Component {
 					>
 						{!isRandom ? (recipes.length < 1 ? "Meal of the Day" : `About ${recipes.length} results found`) : "Impressed?"}
 					</Header>					
-					{!isRandom ? (recipes.length < 1 ? dailyRecipe : card) : randomCard}
+					{!isRandom ? (recipes.length < 1 ? dailyRecipe : card) : randomCard}					
 				</section>								
 			  </div>              
 		  </div>

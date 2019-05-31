@@ -36,9 +36,9 @@ const Favourites = (props) => {
     });
 
     return (
-        <div>
+        <div className="Favorites">
             {/* <RecipeMenu /> */}
-            <h1>Favorite Recipes</h1>
+            <h1 id="Favorites-header">Favorite Recipes</h1>
             <Fragment>
                 <Grid stackable columns={4} divided>
                     <Grid.Row>
