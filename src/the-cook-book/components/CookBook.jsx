@@ -76,20 +76,18 @@ class CookBook extends Component {
 		const {isCardSmall, recipes, isError, isRandom, randomRecipe, recipeId} = this.state;
 		const {meals, addFavorite} = this.props;
 
-		const card = recipes.map((recipe) => {
-			if(Object.keys(recipe).length > 2) {
-				return <RecipeCard 
-							recipe={recipe} 
-							key={recipe.idMeal} 
-							rating={this.handleRate} 
-							addFavorite={addFavorite} 
-							canDelete={false}
-							fullDisplay={this.handleFullDisplay}
-							isCardSmall={recipe.idMeal === recipeId ? isCardSmall : true}
-							useClass={true}
-						/>
-			}
-		})
+		const card = recipes.map((recipe) => 
+			<RecipeCard 
+				recipe={recipe} 
+				key={recipe.idMeal} 
+				rating={this.handleRate} 
+				addFavorite={addFavorite} 
+				canDelete={false}
+				fullDisplay={this.handleFullDisplay}
+				isCardSmall={recipe.idMeal === recipeId ? isCardSmall : true}
+				useClass={true}
+			/>
+		)
 
 		const randomCard = randomRecipe.map((recipe) => {
 			return <RecipeCard 
@@ -125,7 +123,7 @@ class CookBook extends Component {
 		return (
 		  <div className="CookBook">
 			  {/* <RecipeMenu /> */}
-			  <Header as="h1" color="orange" textAlign="center">The CookBook</Header>
+			  <Header as="h1" color="orange" textAlign="center">The Chef</Header>
 			  <div className="CookBook-content">
 				<section className="CookBook-aside">
 					<Aside isError={isError} getRandomRecipe={this.getRandomRecipe} search={this.handleSearchResult} />

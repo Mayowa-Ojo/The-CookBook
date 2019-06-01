@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react';
 import { Card, Image, Rating, Icon, Popup, Button, Modal } from 'semantic-ui-react';
 import '../styles/RecipeCard.css';
+import RecipeModal from "./RecipeModal";
 
 const RecipeCard = (props) => {
 	const { idMeal, strMeal, strCategory, strInstructions, strMealThumb, ingredients: ingArr, measures: measureArr } = props.recipe;
 	const { addFavorite, canDelete, removeFavorite, fullDisplay, isCardSmall, useClass, label } = props;
 	// ==================================================================================	
-	const ingredients = ingArr.map(ing => <p>{ing}</p>)
-	const hyphen = ingArr.map(val => <p>-</p>)
-	const measures = measureArr.map(amount => <p>{amount}</p>)
+	const ingredients = ingArr.map((ing, i) => <p key={i}>{ing}</p>)
+	const hyphen = ingArr.map((val, i) => <p key={i}>-</p>)
+	const measures = measureArr.map((amount, i) => <p key={i}>{amount}</p>)
 
 	const popup = (
 		canDelete 
@@ -81,12 +82,12 @@ const RecipeCard = (props) => {
 								{isCardSmall ? "More..." : "...Less"}
 							</Button>
 						</div>
+						<Modal trigger={<Button size="mini" floated="left">Modal</Button>}>
+							<RecipeModal />
+						</Modal>
 					</Card.Content>
 				</Card>
-			</div>
-			<Modal trigger={<Button>Modal</Button>}>
-				
-			</Modal>
+			</div>			
 		</Fragment>
 	)
 }
