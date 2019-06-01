@@ -8,6 +8,13 @@
     margin-bottom: 3em;
 }
 
+#SideBar-btn:hover {
+    background: transparent;
+    border: 1px solid olive;
+    cursor: pointer;
+    color: steelblue;
+}
+
 @media screen and (max-width: 700px) {
     .SideBar-dropdown {
         display: none;
@@ -27,6 +34,14 @@
         margin-bottom: 1.5em;
         width: 40%;
         margin-left: 30%;
-        margin-right: 30%
+        margin-right: 30%;
+        cursor: pointer;
+    }
+
+    #SideBar-btn:hover {
+        background: transparent;
+        border: 1px solid olive;
+        cursor: pointer;
+        color: steelblue;
     }
 }

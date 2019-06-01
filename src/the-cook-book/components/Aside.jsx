@@ -55,7 +55,7 @@ const Aside = (props) => {
 			</div>
 			<div>
 				<h3>Not sure what you're looking for?</h3>
-				<Button id="SideBar-btn" color="pink" onClick={getRandomRecipe}>Surprise me!</Button>
+				<Button id="SideBar-btn" color="olive" onClick={getRandomRecipe}>Surprise me!</Button>
 			</div>
         </Fragment>
     )

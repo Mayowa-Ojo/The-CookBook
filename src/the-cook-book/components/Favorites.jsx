@@ -21,10 +21,9 @@ const Favourites = (props) => {
     
     const favoriteCard = favorites.map((recipe) => {
         return (
-            <Grid.Column computer={4} tablet={8} mobile={16}>
+            <Grid.Column computer={4} tablet={8} mobile={16} key={recipe.idMeal}>
                 <RecipeCard 
-                    recipe={recipe} 
-                    key={recipe.idMeal} 
+                    recipe={recipe}                     
                     canDelete={true} 
                     removeFavorite={removeFavorite}
                     isCardSmall={recipe.idMeal === recipeId ? isCardSmall : true}
@@ -36,9 +35,9 @@ const Favourites = (props) => {
     });
 
     return (
-        <div>
+        <div className="Favorites">
             {/* <RecipeMenu /> */}
-            <h1>Favorite Recipes</h1>
+            <h1 id="Favorites-header">Favorite Recipes</h1>
             <Fragment>
                 <Grid stackable columns={4} divided>
                     <Grid.Row>

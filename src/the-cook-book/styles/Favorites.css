@@ -1,6 +1,8 @@
-h1 {
+#Favorites-header {
     margin-top: 2em;
+    margin-bottom: 2em;
     text-align: center;
+    color: orange;
 }
 
 /* .Favorites-container {

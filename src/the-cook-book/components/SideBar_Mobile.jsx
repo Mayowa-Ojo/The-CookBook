@@ -11,6 +11,11 @@ const SideBarMobile = () => {
 
     const handleActiveItem = (e, {name}) => {
         setActiveItem(name)
+        
+    }
+
+    const handleSidebarClick = () => {
+        setVisibility(false)
     }
 
     const handleSidebarHide = () => {
@@ -40,6 +45,7 @@ const SideBarMobile = () => {
                     name='Add New Recipe'
                     active={activeItem === 'Add New Recipe'} 
                     onClick={handleActiveItem}
+                    onClick={handleSidebarClick}
                 />
                 <Menu.Item
                     as={ Link }
@@ -47,6 +53,7 @@ const SideBarMobile = () => {
                     name='Favorite Recipes' 
                     active={activeItem === 'Favorite Recipes'} 
                     onClick={handleActiveItem}
+                    onClick={handleSidebarClick}
                 />
             </Sidebar>
             <Sidebar.Pusher style={{minHeight: "100vh"}}>
@@ -63,7 +70,7 @@ const SideBarMobile = () => {
                             onClick={handleActiveItem}
                     />
                     <Menu.Menu position='right'>
-                        <Transition.Group visible={animationVisible} animation="swing right" duration={500}>
+                        <Transition.Group animation="swing right" duration={500}>
                             {animationVisible && 
                             <Icon
                                 name="sidebar" 
