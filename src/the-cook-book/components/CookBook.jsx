@@ -3,21 +3,22 @@ import axios from 'axios';
 import { Header} from 'semantic-ui-react';
 import '../styles/CookBook.css';
 import RecipeCard from './RecipeCard';
-import { sample, extractProps } from '../helpers/helpers';
+import { dailyRecipeIds, getDailyRecipeId, extractProps } from '../helpers/helpers';
 import Aside from './Aside';
 
 const baseURL = `https://www.themealdb.com/api/json/v1/1/`;
 
 class CookBook extends Component {
-	static defaultProps = {
-		meals: sample.meals
-	}
+	// static defaultProps = {
+	// 	meals: sample.meals
+	// }
 	constructor(props) {
 		super(props)
 		this.state = {
 			isCardSmall: true,
 			recipeId: "",
-			randomRecipe: [],
+      randomRecipe: [],
+      dailyRecipe: [],
 			recipes: [],
 			isError: false,
 			isRandom: false,
@@ -31,8 +32,8 @@ class CookBook extends Component {
 	}
 
 	async componentDidMount() {
-		let url = `${baseURL}random.php`;
-		await this.fetchMeal(url);
+    // get the recipe for the day
+    await this.getDailyRecipe()
 	}
 
 	getRandomRecipe = async () => {
@@ -43,7 +44,20 @@ class CookBook extends Component {
 			randomRecipe: [...parsedData],
 			isRandom: true
 		})
-	}	
+  }	
+  
+  getDailyRecipe = async () => {
+    // find daily recipe
+    const recipe = getDailyRecipeId(dailyRecipeIds);
+    const { idMeal: id } = recipe;
+    // call api
+    let url = `${baseURL}lookup.php?i=${id}`;
+    const data = await this.fetchMeal(url);
+    const parsedData = extractProps(data);
+    this.setState({
+      dailyRecipe: [...parsedData]
+    })
+  }
 
 	handleSearchResult = async (searchQuery) => {
 		// console.log(searchQuery)
@@ -73,8 +87,8 @@ class CookBook extends Component {
 	// =================================================================================================
 
 	render() {
-		const {isCardSmall, recipes, isError, isRandom, randomRecipe, recipeId} = this.state;
-		const {meals, addFavorite} = this.props;
+		const {isCardSmall, recipes, isError, isRandom, randomRecipe, dailyRecipe, recipeId} = this.state;
+		const {addFavorite} = this.props;
 
 		const card = recipes.map((recipe) => 
 			<RecipeCard 
@@ -103,9 +117,7 @@ class CookBook extends Component {
 		})
 
 		// =====================================================================================
-		// WARNING: Breaking Changes
-		const parsedData = extractProps(meals);
-		const dailyRecipe = parsedData.map((recipe) => {
+		const dailyRecipeCard = dailyRecipe.map((recipe) => {
 			return <RecipeCard 
 						recipe={recipe} 
 						key={recipe.idMeal} 
@@ -136,7 +148,7 @@ class CookBook extends Component {
 					>
 						{!isRandom ? (recipes.length < 1 ? "Meal of the Day" : `About ${recipes.length} results found`) : "Impressed?"}
 					</Header>					
-					{!isRandom ? (recipes.length < 1 ? dailyRecipe : card) : randomCard}					
+					{!isRandom ? (recipes.length < 1 ? dailyRecipeCard : card) : randomCard}					
 				</section>								
 			  </div>              
 		  </div>
